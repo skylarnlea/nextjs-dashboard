@@ -11,6 +11,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   //onChange will invoke handleSearch whenver input value changes
   function handleSearch(term: string) {
+    console.log(`Searching... ${term}`);
+    
     const params = new URLSearchParams(searchParams);
     if (term) { //if input term,
       params.set('query', term); //set params string to term
