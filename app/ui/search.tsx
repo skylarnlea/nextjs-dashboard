@@ -1,11 +1,23 @@
 'use client'; //a Client Component --> can use event listeners and hooks
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+
 
 export default function Search({ placeholder }: { placeholder: string }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   //onChange will invoke handleSearch whenver input value changes
   function handleSearch(term: string) {
-    console.log(term);
+    const params = new URLSearchParams(searchParams);
+    if (term) { //if input term,
+      params.set('query', term); //set params string to term
+    } else { //if no input term,
+      params.delete('query'); //delete it
+    }
+    replace(`${pathname}?${params.toString()}`); //updates the URL with user's search data
   } 
 
   return (
